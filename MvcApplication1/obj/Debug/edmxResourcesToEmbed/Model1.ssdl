@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Model.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Deliveries" EntityType="Model.Store.Deliveries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Goods" EntityType="Model.Store.Goods" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="Model.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Orders_Customers" Association="Model.Store.FK_Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Deliveries" Association="Model.Store.FK_Orders_Deliveries">
+      <End Role="Deliveries" EntitySet="Deliveries" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Goods" Association="Model.Store.FK_Orders_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="nchar" Nullable="false" MaxLength="255" />
+    <Property Name="Phone" Type="nchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Deliveries">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="nchar" Nullable="false" MaxLength="255" />
+    <Property Name="Cost" Type="numeric" Nullable="false" Scale="2" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Cost" Type="numeric" Nullable="false" Scale="2" />
+    <Property Name="Title" Type="nchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="GoodId" Type="int" Nullable="false" />
+    <Property Name="DeliveryId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Orders_Customers">
+    <End Role="Customers" Type="Model.Store.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Deliveries">
+    <End Role="Deliveries" Type="Model.Store.Deliveries" Multiplicity="1" />
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deliveries">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="DeliveryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Goods">
+    <End Role="Goods" Type="Model.Store.Goods" Multiplicity="1" />
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="GoodId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

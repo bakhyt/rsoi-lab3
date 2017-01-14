@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Model.Store.Customers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Deliveries" EntityType="Model.Store.Deliveries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Goods" EntityType="Model.Store.Goods" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Orders" EntityType="Model.Store.Orders" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Orders_Customers" Association="Model.Store.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Deliveries" Association="Model.Store.FK_Orders_Deliveries">
+            <End Role="Deliveries" EntitySet="Deliveries" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Goods" Association="Model.Store.FK_Orders_Goods">
+            <End Role="Goods" EntitySet="Goods" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nchar" Nullable="false" MaxLength="255" />
+          <Property Name="Phone" Type="nchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nchar" Nullable="false" MaxLength="255" />
+          <Property Name="Cost" Type="numeric" Nullable="false" Scale="2" />
+        </EntityType>
+        <EntityType Name="Goods">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Cost" Type="numeric" Nullable="false" Scale="2" />
+          <Property Name="Title" Type="nchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="GoodId" Type="int" Nullable="false" />
+          <Property Name="DeliveryId" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Model.Store.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Deliveries">
+          <End Role="Deliveries" Type="Model.Store.Deliveries" Multiplicity="1" />
+          <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Deliveries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Goods">
+          <End Role="Goods" Type="Model.Store.Goods" Multiplicity="1" />
+          <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goods">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Model.Customers" />
+          <EntitySet Name="Deliveries" EntityType="Model.Deliveries" />
+          <EntitySet Name="Goods" EntityType="Model.Goods" />
+          <EntitySet Name="Orders" EntityType="Model.Orders" />
+          <AssociationSet Name="FK_Orders_Customers" Association="Model.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Deliveries" Association="Model.FK_Orders_Deliveries">
+            <End Role="Deliveries" EntitySet="Deliveries" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Goods" Association="Model.FK_Orders_Goods">
+            <End Role="Goods" EntitySet="Goods" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Orders" Relationship="Model.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="true" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Orders" Relationship="Model.FK_Orders_Deliveries" FromRole="Deliveries" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Goods">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Orders" Relationship="Model.FK_Orders_Goods" FromRole="Goods" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="GoodId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryId" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Model.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="Deliveries" Relationship="Model.FK_Orders_Deliveries" FromRole="Orders" ToRole="Deliveries" />
+          <NavigationProperty Name="Goods" Relationship="Model.FK_Orders_Goods" FromRole="Orders" ToRole="Goods" />
+        </EntityType>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Model.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Model.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Deliveries">
+          <End Role="Deliveries" Type="Model.Deliveries" Multiplicity="1" />
+          <End Role="Orders" Type="Model.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Deliveries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Goods">
+          <End Role="Goods" Type="Model.Goods" Multiplicity="1" />
+          <End Role="Orders" Type="Model.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goods">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Model.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="Model.Deliveries">
+              <MappingFragment StoreEntitySet="Deliveries">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goods">
+            <EntityTypeMapping TypeName="Model.Goods">
+              <MappingFragment StoreEntitySet="Goods">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Model.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="Model.Customers" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5923063151041668" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Deliveries" Width="1.5" PointX="3" PointY="3.5" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Goods" Width="1.5" PointX="6.125" PointY="2" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Orders" Width="1.5" PointX="3" PointY="0.875" Height="2.2496956380208335" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Orders_Customers" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.0461531575520833" />
+          <ConnectorPoint PointX="3" PointY="2.0461531575520833" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_Orders_Deliveries" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.75" PointY="3.5" />
+          <ConnectorPoint PointX="3.75" PointY="3.1246956380208335" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_Orders_Goods" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.125" PointY="2.5623478190104167" />
+          <ConnectorPoint PointX="4.5" PointY="2.5623478190104167" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
