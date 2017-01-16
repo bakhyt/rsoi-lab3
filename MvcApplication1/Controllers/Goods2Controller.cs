@@ -76,7 +76,7 @@ namespace MvcApplication1.Controllers
             bool res = false;
 
             var client = new RestClient("http://localhost:7777/GoodsService/api");
-            var request = new RestRequest(string.Format("goods?orderId={0}", goodId), Method.DELETE);
+            var request = new RestRequest(string.Format("goods?goodId={0}", goodId), Method.DELETE);
             IRestResponse<bool> response2 = client.Execute<bool>(request);
 
             if (response2 != null && response2.Data != null)
