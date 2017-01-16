@@ -39,5 +39,54 @@ namespace MvcApplication1.Controllers
             }
             return null;
         }
+        public int Post()
+        {
+            MyOAuth.CheckAccessToken();
+
+            var client = new RestClient("http://localhost:7777/GoodsService/api");
+            var request = new RestRequest("goods", Method.POST);
+            IRestResponse<int> response2 = client.Execute<int>(request);
+
+            if (response2 != null && response2.Data != null)
+            {
+                return response2.Data;
+            }
+            return -1;
+        }
+        public Good Post(string goodName, double goodCost)
+        {
+            MyOAuth.CheckAccessToken();
+
+            var client = new RestClient("http://localhost:7777/GoodsService/api");
+            var request = new RestRequest(string.Format("Название: {0}; Цена: {1}", goodName, goodCost), Method.POST);
+
+            IRestResponse<Good> response2 = client.Execute<Good>(request);
+
+            if (response2 != null && response2.Data != null)
+            {
+                return response2.Data;
+            }
+            return null;
+        }
+        [HttpDelete]
+        public string Delete(int goodId)
+        {
+            MyOAuth.CheckAccessToken();
+
+            bool res = false;
+
+            var client = new RestClient("http://localhost:7777/GoodsService/api");
+            var request = new RestRequest(string.Format("goods?orderId={0}", goodId), Method.DELETE);
+            IRestResponse<bool> response2 = client.Execute<bool>(request);
+
+            if (response2 != null && response2.Data != null)
+            {
+                res = response2.Data;
+            }
+
+            if (res)
+                return "Удалено - " + goodId;
+            else return "Не удалось удалить -" + goodId;
+        }
     }
 }
